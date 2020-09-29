@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+    public static GameManager GetGameManager()
+    { 
+        return instance;
+    }
+    private void Awake()
+    {
+        instance = this;
+    }
     [SerializeField]
     private GameObject ball;
     private void Start()
