@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.AI;
 
 public class NavMeshTargetScript : MonoBehaviour
@@ -9,6 +10,7 @@ public class NavMeshTargetScript : MonoBehaviour
     private GameObject target;
     [SerializeField]
     private NavMeshAgent agent;
+    private bool isStop = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,9 @@ public class NavMeshTargetScript : MonoBehaviour
     private void Update()
     {
         agent.SetDestination(target.transform.position);
-        if (agent.isStopped && agent.pathStatus == NavMeshPathStatus.PathComplete)
+        if (agent.remainingDistance != Mathf.Infinity && agent.remainingDistance <= agent.stoppingDistance && !isStop)
         {
+            this.isStop = true;
             StartCoroutine(BlowUp());
         }
     }
